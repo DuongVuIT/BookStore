@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <th:block th:replace="_layoutAdmin::link-css"></th:block>
-    <th:block th:replace="_layoutAdmin::header"></th:block>
+
 </head>
 <body>
 <th:block th:replace="_layoutAdmin::body"></th:block>
+<th:block th:fragment="content" th:inline="text"></th:block>
 </body>
 </html>
