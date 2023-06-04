@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My book list</title>
+    <th:block th:replace="_layoutAdmin :: link-css"></th:block>
+    <style>
+
+    #content {
+      min-height: 100vh; /* Minimum height of the viewport */
+      background-color: whitesmoke;
+    }
+  </style>
+
+</head>
+<body>
+<th:block th:replace="_layoutAdmin :: header"></th:block>
+<!-- Main Menu -->
+<div id="sidebar-left" class="span2">
+    <div class="nav-collapse sidebar-nav">
+        <ul class="nav nav-tabs nav-stacked main-menu">
+            <li><a href="/admin/categories"><i class="icon-bar-chart"></i><span class="badge">  CATEGORY  </span></a></li>
+            <li><a href="/admin/product"><i class="icon-barcode"></i><span class="badge">  PRODUCT  </span></a></li>
+            <li><a href="/admin/author"><i class="icon-group"></i><span class="badge">  AUTHOR  </span></a></li>
+            <li><a href="#"><i class="icon-shopping-cart"></i><span class="badge">  ORDER  </span></a></li>
+            <li><a href="#"><i class="icon-group"></i><span class="badge">  USER  </span></a></li>
+        </ul>
+    </div>
+</div>
+<!-- end: Main Menu -->
+<div id="content" class="span10">
+    <div style="background-color: whitesmoke; padding: 20px;">
+        <h1 style="color: #333;">Author List</h1>
+        <br/>
+        <a th:href="@{/admin/author/add}" style="margin-bottom: 10px;">Create New Author</a>
+        <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+            <tr>
+                <th style="background-color: #eee; padding: 10px; border: 1px solid #ccc;">Author ID</th>
+                <th style="background-color: #eee; padding: 10px; border: 1px solid #ccc;">Author Name</th>
+                <th style="background-color: #eee; padding: 10px; border: 1px solid #ccc;">Email</th>
+                <th style="background-color: #eee; padding: 10px; border: 1px solid #ccc;">Phone Number</th>
+                <th style="background-color: #eee; padding: 10px; border: 1px solid #ccc;">Address</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="author : ${authors}">
+                <td style="padding: 10px; border: 1px solid #ccc;" th:text="${author.matacgia}"></td>
+                <td style="padding: 10px; border: 1px solid #ccc;" th:text="${author.tentacgia}"></td>
+                <td style="padding: 10px; border: 1px solid #ccc;" th:text="${author.email}"></td>
+                <td style="padding: 10px; border: 1px solid #ccc;" th:text="${author.sdt}"></td>
+                <td style="padding: 10px; border: 1px solid #ccc;" th:text="${author.diachi}"></td>
+                <td style="padding: 10px; border: 1px solid #ccc;">
+                    <a th:href="@{/admin/author/edit/{id}(id=${author.matacgia})}">Edit</a>
+                    <a th:href="@{/admin/author/delete/{id}(id=${author.matacgia})}"
+                       onclick="return confirm('Are you sure?')" style="float:right;">Delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- end: Content -->
+<th:block th:replace="_layoutAdmin :: footer"></th:block>
+</body>
+</html>

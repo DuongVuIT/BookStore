@@ -2,7 +2,9 @@ package com.example.BookStore.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -26,6 +28,8 @@ public class Product {
     @Column(name = "soluong")
     private int soluong;
     @Column(name = "ngaydang")
+//    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date ngaydang;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "maloai" ,referencedColumnName = "maloai",foreignKey = @ForeignKey(name="FK_PRODUCT_CATEGORY"))
@@ -43,4 +47,7 @@ public class Product {
             joinColumns = {@JoinColumn(name = "masp")},
             inverseJoinColumns = {@JoinColumn(name = "madonhang")})
     private Set<Order> order = new HashSet<>();
+
+
+
 }

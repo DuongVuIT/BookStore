@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <th:block th:replace="_layoutAdmin :: link-css"></th:block>
+    <style>
+    #content {
+      min-height: 100vh; /* Minimum height of the viewport */
+      background-color: whitesmoke;
+    }
+  </style>
+    <title>Create New Product</title>
+</head>
+<body>
+<th:block th:replace="_layoutAdmin :: header"></th:block>
+<!-- Main Menu -->
+<div id="sidebar-left" class="span2">
+    <div class="nav-collapse sidebar-nav">
+        <ul class="nav nav-tabs nav-stacked main-menu">
+            <li><a href="/admin/categories"><i class="icon-bar-chart"></i><span class="badge">  CATEGORY  </span></a></li>
+            <li><a href="/admin/product"><i class="icon-barcode"></i><span class="badge">  PRODUCT  </span></a></li>
+            <li><a href="#"><i class="icon-shopping-cart"></i><span class="badge">  ORDER  </span></a></li>
+            <li><a href="#"><i class="icon-group"></i><span class="badge">  USER  </span></a></li>
+        </ul>
+    </div>
+</div>
+<!-- end: Main Menu -->
+<!--  Content -->
+<div id="content" class="span10">
+    <div style="background-color: whitesmoke">
+        <!-- Content Block -->
+        <th:block th:fragment="content" th:inline="text">
+            <h1>Edit Author</h1>
+            <br/>
+            <form th:action="@{/admin/author/save}" th:object="${author}" method="post">
+                <!-- Các trường thông tin -->
+                <input type="hidden" th:field="*{matacgia}">
+                <div>
+                    <label for="authorName">Author Name:</label>
+                    <input type="text" id="authorName" th:field="*{tentacgia}" required />
+                </div>
+                <div>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" th:field="*{email}" required />
+                </div>
+                <div>
+                    <label for="phoneNumber">Phone Number:</label>
+                    <input type="tel" id="phoneNumber" th:field="*{sdt}" required />
+                </div>
+                <div>
+                    <label for="address">Address:</label>
+                    <textarea id="address" th:field="*{diachi}" required></textarea>
+                </div>
+
+                <!-- Nút lưu và hủy -->
+                <input type="submit" class="btn btn-primary" value = "Save">
+                <a href="/admin/author" class="cancel-link">Cancel</a>
+            </form>
+        </th:block>
+        <!-- End of Content Block -->
+    </div>
+</div>
+<!-- end: Content -->
+<th:block th:replace="_layoutAdmin :: footer"></th:block>
+</body>
+</html>

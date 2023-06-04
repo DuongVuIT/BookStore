@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <th:block th:replace="_layoutAdmin :: link-css"></th:block>
+    <style>
+    #content {
+      min-height: 100vh; /* Minimum height of the viewport */
+      background-color: whitesmoke;
+    }
+  </style>
+    <title>Create New Product</title>
+</head>
+<body>
+<th:block th:replace="_layoutAdmin :: header"></th:block>
+<!-- Main Menu -->
+<div id="sidebar-left" class="span2">
+    <div class="nav-collapse sidebar-nav">
+        <ul class="nav nav-tabs nav-stacked main-menu">
+            <li><a href="/admin/categories"><i class="icon-bar-chart"></i><span class="badge">  CATEGORY  </span></a></li>
+            <li><a href="/admin/product"><i class="icon-barcode"></i><span class="badge">  PRODUCT  </span></a></li>
+            <li><a href="#"><i class="icon-shopping-cart"></i><span class="badge">  ORDER  </span></a></li>
+            <li><a href="#"><i class="icon-group"></i><span class="badge">  USER  </span></a></li>
+        </ul>
+    </div>
+</div>
+<!-- end: Main Menu -->
+<!--  Content -->
+<div id="content" class="span10">
+    <div style="background-color: whitesmoke">
+        <!-- Content Block -->
+        <th:block th:fragment="content" th:inline="text">
+            <h1>Create New Product</h1>
+            <br/>
+            <form th:action="@{/admin/product/add}" th:object="${product}" method="post">
+
+                <div class="col-6 mb-3">
+                    <label class="form-label" for="tensp">Tên Sách:</label>
+                    <input class="form-control" type="text" th:field="*{tensp}" id="tensp">
+                </div>
+
+                <div class="col-6 mb-3">
+                    <label class="form-label" for="hinhanh">Hình Ảnh:</label>
+                    <input class="form-control" type="file" th:field="*{hinhanh}" id="hinhanh">
+                </div>
+
+                <div class="col-6 mb-3">
+                    <label class="form-label" for="gia">Giá:</label>
+                    <input class="form-control" type="number" th:field="*{gia}" id="gia">
+                </div>
+
+                <div class="col-6 mb-3">
+                    <label class="form-label" for="mota">Mô Tả:</label>
+                    <textarea class="form-control" th:field="*{mota}" id="mota"></textarea>
+                </div>
+
+                <div class="col-6 mb-3">
+                    <label class="form-label" for="soluong">Số Lượng:</label>
+                    <input class="form-control" type="number" th:field="*{soluong}" id="soluong">
+                </div>
+
+                <div class="col-6 mb-3">
+                    <label class="form-label" for="ngaydang">Ngày Đăng:</label>
+                    <input class="form-control" type="date" th:field="*{ngaydang}" id="ngaydang">
+                </div>
+
+                <div class="col-6 mb-3">
+                    <label class="form-label" for="category">Thể Loại:</label>
+                    <select class="form-control" th:field="*{category}" id="category">
+                        <option th:each="category : ${categories}" th:value="${category.maloai}" th:text="${category.tenloai}"></option>
+                    </select>
+                </div>
+
+                <div class="col-6 mb-3">
+                    <label class="form-label" for="author">Tác Giả:</label>
+                    <select class="form-control" th:field="*{author}" id="author">
+                        <option th:each="author : ${authors}" th:value="${author.matacgia}" th:text="${author.tentacgia}"></option>
+                    </select>
+                </div>
+                <input type="submit" value="Save">
+            </form>
+        </th:block>
+        <!-- End of Content Block -->
+    </div>
+</div>
+<!-- end: Content -->
+<th:block th:replace="_layoutAdmin :: footer"></th:block>
+</body>
+</html>

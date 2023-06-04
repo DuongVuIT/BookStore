@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <th:block th:replace="_layoutAdmin :: link-css"></th:block>
+  <style>
+
+    #content {
+      min-height: 100vh; /* Minimum height of the viewport */
+      background-color: whitesmoke;
+    }
+  </style>
+  <title>Create New Cate</title>
+</head>
+<body>
+<th:block th:replace="_layoutAdmin :: header"></th:block>
+<!-- Main Menu -->
+<div id="sidebar-left" class="span2">
+  <div class="nav-collapse sidebar-nav">
+    <ul class="nav nav-tabs nav-stacked main-menu">
+      <li><a href="/admin/categories"><i class="icon-bar-chart"></i><span class="badge">  CATEGORY  </span></a></li>
+      <li><a href="/admin/product"><i class="icon-barcode"></i><span class="badge">  PRODUCT  </span></a></li>
+      <li><a href="#"><i class="icon-shopping-cart"></i><span class="badge">  ORDER  </span></a></li>
+      <li><a href="#"><i class="icon-group"></i><span class="badge">  USER  </span></a></li>
+    </ul>
+  </div>
+</div>
+<!-- end: Main Menu -->
+<!--  Content -->
+<div id="content" class="span10">
+  <div style="background-color: whitesmoke">
+    <!-- Content Block -->
+    <th:block th:fragment="content" th:inline="text">
+      <h1>Create New Cate</h1>
+      <br/>
+      <form th:action="@{/admin/categories/save}" th:object="${category}" method="post">
+
+        <div class="col-6 mb-3">
+          <label class="form-label" for="tenloai">Tên loại:</label>
+          <input class="form-control" type="text" th:field="*{tenloai}" id="tenloai" >
+        </div>
+
+        <input type="submit" class="btn btn-primary" value = "Save">
+      </form>
+    </th:block>
+    <!-- End of Content Block -->
+  </div>
+</div>
+<!-- end: Content -->
+<th:block th:replace="_layoutAdmin :: footer"></th:block>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <th:block th:replace="_layoutAdmin :: link-css"></th:block>
+  <title>Edit</title>
+</head>
+<body>
+<th:block th:replace="_layoutAdmin :: body"></th:block>
+<th:block th:fragment="content" th:inline="text">
+<div class="container">
+  <h1>Edit</h1>
+  <br/>
+  <form th:action="@{/admin/categories/save}" th:object="${category}" method="post">
+
+    <div class="col-6 mb-3">
+      <input type="hidden" th:field="*{maloai}">
+      <label class="form-label" for="tenloai">Tên loại</label>
+      <input class="form-control" type="text" th:field="*{tenloai}" id="tenloai">
+    </div>
+    <input type="submit" class="btn btn-primary" value = "Save">
+  </form>
+
+</div>
+</body>
+</html>

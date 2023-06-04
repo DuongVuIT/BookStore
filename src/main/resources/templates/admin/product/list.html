@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My book list</title>
+    <th:block th:replace="_layoutAdmin :: link-css"></th:block>
+</head>
+<body>
+<th:block th:replace="_layoutAdmin :: header"></th:block>
+
+<!-- Main Menu -->
+<div id="sidebar-left" class="span2">
+    <div class="nav-collapse sidebar-nav">
+        <ul class="nav nav-tabs nav-stacked main-menu">
+            <li><a href="/admin/categories"><i class="icon-bar-chart"></i><span class="badge">  CATEGORY  </span></a></li>
+            <li><a href="/admin/product"><i class="icon-barcode"></i><span class="badge">  PRODUCT  </span></a></li>
+            <li><a href="/admin/author"><i class="icon-group"></i><span class="badge">  AUTHOR  </span></a></li>
+            <li><a href="#"><i class="icon-shopping-cart"></i><span class="badge">  ORDER  </span></a></li>
+            <li><a href="#"><i class="icon-group"></i><span class="badge">  USER  </span></a></li>
+        </ul>
+    </div>
+</div>
+<!-- end: Main Menu -->
+
+
+<!-- start: Content -->
+<div id="content" class="span10">
+    <div style="background-color: whitesmoke">
+        <!-- Content Block -->
+        <th:block th:fragment="content" th:inline="text">
+            <div>
+                <a href="/admin/product/add" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Create New Product</a>
+            </div>
+            <table class="table">
+                <tr>
+                    <th>Mã Sách</th>
+                    <th>Tên Sách</th>
+                    <th>Hình Ảnh</th>
+                    <th>Giá</th>
+                    <th>Mô Tả</th>
+                    <th>Số Lượng</th>
+                    <th>Ngày Đăng</th>
+                    <th>Actions</th>
+                    <th>Tác Giả</th>
+                </tr>
+
+                <tr th:each="product : ${products}">
+                    <td class="p-2 border" th:text="${product.masp}"></td>
+                    <td class="p-2 border" th:text="${product.tensp}"></td>
+                    <td class="p-2 border"><img th:src="@{/admin/image/} + ${product.hinhanh}" alt="Product Image" width="100px" height="100px" /></td>
+                    <td class="p-2 border" style="width:80px;">
+                        <div>
+                            <span th:text="${#numbers.formatDecimal(product.gia, 0, 'COMMA', 0, 'POINT')}"></span>
+                            <span style="font-size: 12px;">đ</span>
+                        </div>
+                    </td>
+                    <td class="p-2 border" th:text="${product.mota}"></td>
+                    <td class="p-2 border" th:text="${product.soluong}"></td>
+                    <td class="p-2 border" th:text="${product.ngaydang}"></td>
+                    <td class="p-2 border" th:text="${product.category.tenloai}"></td>
+                    <td class="p-2 border" th:text="${product.author.tentacgia}"></td>
+                    <td>
+                        <a th:href="@{/admin/product/edit/{id}(id=${product.masp})}">Edit</a>
+                        <a th:href="@{/admin/product/delete/{id}(id=${product.masp})}" onclick="return confirm('Are you sure?')">Delete</a>
+                    </td>
+                </tr>
+
+            </table>
+        </th:block>
+        <!-- End of Content Block -->
+    </div>
+</div>
+<!-- end: Content -->
+
+<th:block th:replace="_layoutAdmin :: footer"></th:block>
+</body>
+</html>
