@@ -3,8 +3,6 @@ package com.example.BookStore.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.List;
-
 @Entity
 @Data
 @Table(name = "role")
@@ -14,6 +12,29 @@ public class Role {
     private int maquyen;
     @Column(name = "tenquyen")
     private String tenquyen;
-    @OneToMany(mappedBy = "role",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private List<User> users;
+
+
+    public Role() {
+    }
+
+    public Role(String tenquyen)
+    {
+        super();
+        this.tenquyen =  tenquyen;
+    }
+    public int getMaquyen() {
+        return maquyen;
+    }
+
+    public void setMaquyen(int maquyen) {
+        this.maquyen = maquyen;
+    }
+
+    public String getTenquyen() {
+        return tenquyen;
+    }
+
+    public void setTenquyen(String tenquyen) {
+        this.tenquyen = tenquyen;
+    }
 }

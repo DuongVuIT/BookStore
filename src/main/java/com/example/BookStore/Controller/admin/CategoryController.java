@@ -16,8 +16,8 @@ public class CategoryController {
     private CategoryServices categoryServices;
    @GetMapping
     public String showAllCate(Model model){
-       List<Category> listcate = categoryServices.getAllCate();
-       model.addAttribute("categories",listcate);
+       List<Category> categories = categoryServices.getAllCate();
+       model.addAttribute("categories",categories);
        return "admin/category/list";
    }
     @GetMapping("/new")

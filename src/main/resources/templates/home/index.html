@@ -5,15 +5,14 @@
     <th:block th:replace="layout :: link-favicon"></th:block>
     <th:block th:replace="layout :: link-css"></th:block>
     <style>
-    .product-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 20px;
-    }
-}
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 20px;
+        }
 
 
-  </style>
+    </style>
 </head>
 <body>
 <th:block th:replace="layout :: header"></th:block>
@@ -39,31 +38,32 @@
                 <div class="product-filters">
                     <ul>
                         <li class="active" data-filter="*">All</li>
-                        <li data-filter=".strawberry">Strawberry</li>
-                        <li data-filter=".berry">Berry</li>
-                        <li data-filter=".lemon">Lemon</li>
+                        <li th:each="category : ${categories}">
+                            <a th:href="@{/categories/{id}(id=${category.maloai})}" th:text="${category.tenloai}"></a>
+                        </li>
                     </ul>
                 </div>
             </div>
         </div>
-        <div class=" product-grid">
-        <div class="row product-lists" th:each="product : ${products}">
+        <div class="product-grid">
+            <div class="row product-lists" th:each="product : ${products}">
 
-            <div id="" class="col-lg-12 col-md-6 text-center strawberry">
-                <div class="single-product-item">
-                    <div class="product-image">
-                        <a href="/product/detail"><img th:src="@{/admin/image/} + ${product.hinhanh}" alt="Product Image"></a>
+                <div id="" class="col-lg-12 col-md-6 text-center strawberry">
+                    <div class="single-product-item">
+                        <div class="product-image">
+                            <a href="/product/detail"><img th:src="@{/admin/image/} + ${product.hinhanh}" alt="Product Image"></a>
+                        </div>
+                        <h3 th:text="${product.tensp}"></h3>
+                        <p class="product-price">
+                            <span style="font-size: 25px;" th:text="${#numbers.formatDecimal(product.gia, 0, 'COMMA', 0, 'POINT')}"></span>
+                            <span style="font-size: 18px;">đ</span>
+                        </p>
+                        <a href="cart.html" class="cart-btn"><img style="width:20px; height:20px;margin-right:10px;" th:src="@{/user/images/cart.png}"> Add to Cart</a>
                     </div>
-                    <h3 th:text="${product.tensp}"></h3>
-                    <p class="product-price">
-                        <span style="font-size: 25px;" th:text="${#numbers.formatDecimal(product.gia, 0, 'COMMA', 0, 'POINT')}"></span>
-                        <span style="font-size: 18px;">đ</span>
-                    </p>
-                    <a href="cart.html" class="cart-btn"><img style="width:20px; height:20px;margin-right:10px;" th:src="@{/user/images/cart.png}"> Add to Cart</a>
                 </div>
             </div>
         </div>
-        </div>
+
         <div class="row">
             <div class="col-lg-12 text-center">
                 <div class="pagination-wrap">

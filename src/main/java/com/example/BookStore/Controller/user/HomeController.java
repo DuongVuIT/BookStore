@@ -1,7 +1,10 @@
 package com.example.BookStore.Controller.user;
 
 
+import com.example.BookStore.entity.Category;
 import com.example.BookStore.entity.Product;
+import com.example.BookStore.repository.CategoryRepository;
+import com.example.BookStore.services.CategoryServices;
 import com.example.BookStore.services.ProductServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,13 +19,16 @@ import java.util.List;
 public class HomeController {
     @Autowired
     private ProductServices productServices;
-    @GetMapping
+    @Autowired
+    private CategoryServices categoryServices;
+    @GetMapping("/")
     public String home(Model model){
         List<Product> productList = productServices.getAllBooks();
+        List<Category> categories = categoryServices.getAllCate();
         model.addAttribute("products", productList);
+        model.addAttribute("categories", categories);
         return "home/index";
     }
-
     @GetMapping("/contact")
     public String contact(){
         return "home/contact";
