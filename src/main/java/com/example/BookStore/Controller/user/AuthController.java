@@ -1,51 +1,51 @@
 package com.example.BookStore.Controller.user;
 
-import com.example.BookStore.dto.UserDto;
+
 import com.example.BookStore.entity.User;
-import com.example.BookStore.services.UserService;
+
+import com.example.BookStore.services.AuthService;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
+
 @Controller
 public class AuthController {
-    private UserService userService;
-    public AuthController(UserService userService) {
-        this.userService = userService;
-    }
+    @Autowired
+    private AuthService authServices;
+
     @GetMapping("/login")
-    public String loginForm() {
-        return "home/user/login";
+    public String login() {
+        return "home/auth/login";
     }
-
     @GetMapping("/register")
-    public String showRegistrationForm(Model model){
-        // create model object to store form data
-        UserDto user = new UserDto();
-        model.addAttribute("user", user);
-        return "home/user/register";
+    public String register(Model model) {
+        model.addAttribute("user", new User());
+        return "home/auth/register";
     }
-    @PostMapping("/register/save")
-    public String registration(@Valid @ModelAttribute("user") UserDto userDto,
-                               BindingResult result,
-                               Model model){
-        User existingUser = userService.findByUsername(userDto.getUsername());
-
-        if(existingUser != null && existingUser.getUsername() != null && !existingUser.getUsername().isEmpty()){
-            result.rejectValue("username", null,
-                    "There is already an account registered with the same username");
+    @PostMapping("/register")
+    public String register(@Valid @ModelAttribute("user") User user,
+                           BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            List<FieldError> errors = bindingResult.getFieldErrors();
+            for (FieldError error : errors) {
+                model.addAttribute(error.getField() + "_error",
+                        error.getDefaultMessage());
+            }
+            return "home/auth/register";
         }
-
-        if(result.hasErrors()){
-            model.addAttribute("user", userDto);
-            return "home/user/register";
-        }
-
-        userService.saveUser(userDto);
-        return "redirect:/register?success";
+        user.setPassword(new
+                BCryptPasswordEncoder().encode(user.getPassword()));
+        authServices.save(user);
+        return "redirect:/login";
     }
 }

@@ -28,18 +28,15 @@ public class User {
     @Column(name = "diachi")
     private String diachi;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "makh"), inverseJoinColumns = @JoinColumn(name = "maquyen"))
-    private Collection<Role> roles;
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "makh"), inverseJoinColumns = @JoinColumn(name = "maquyen"))
+    private Set<Role> roles = new HashSet<>();
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Order> orders;
 
     public User() {
     }
 
-    public User(String diachi, String emaill, String hoten, String encode, int sdt, String username, List<Role> roleUser) {
-    }
-
-    public int getMakh() {
+    public long getMakh() {
         return makh;
     }
 
@@ -99,7 +96,5 @@ public class User {
         return roles;
     }
 
-    public void setRoles(Collection<Role> roles) {
-        this.roles = roles;
-    }
+
 }
