@@ -19,7 +19,7 @@ public class ProductServices {
         return productRepository.findAll();
     }
 
-    public Product get(Integer id){
+    public Product get(Integer id) {
         return productRepository.findById(id).get();
     }
 
@@ -50,4 +50,7 @@ public class ProductServices {
         productRepository.deleteById(id);
     }
 
+    public List<Product> searchByName(String keyword) {
+        return productRepository.searchByName(keyword);
+    }
 }

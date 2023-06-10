@@ -25,12 +25,12 @@ public class AuthController {
 
     @GetMapping("/login")
     public String login() {
-        return "home/auth/login";
+        return "user/auth/login";
     }
     @GetMapping("/register")
     public String register(Model model) {
         model.addAttribute("user", new User());
-        return "home/auth/register";
+        return "user/auth/register";
     }
     @PostMapping("/register")
     public String register(@Valid @ModelAttribute("user") User user,
@@ -41,7 +41,7 @@ public class AuthController {
                 model.addAttribute(error.getField() + "_error",
                         error.getDefaultMessage());
             }
-            return "home/auth/register";
+            return "user/auth/register";
         }
         user.setPassword(new
                 BCryptPasswordEncoder().encode(user.getPassword()));

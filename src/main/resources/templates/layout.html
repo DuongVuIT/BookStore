@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,6 +13,7 @@
     <!-- favicon -->
     <link th:fragment="link-favicon" rel="shortcut icon" type="image/png" th:href="@{/user/images/favicon.png}">
     <!-- google font -->
+
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
 
@@ -64,19 +65,32 @@
                                 </li>
                                 <li><a href="/about">About</a></li>
 
-                                <li><a href="/login">Login</a>
                                 </li>
                                 <li><a href="/contact">Contact</a></li>
+                                <li sec:authorize="isAuthenticated()">
+                                    <form th:action="@{/logout}" method="post">
+
+                                        <input class="btn btn-outline-dark" type="submit" value="logout">
+                                    </form>
+                                </li>
+                                <li><a class="nav-link" href="#" sec:authentication="name">Username</a></li>
+                                <li sec:authorize="!isAuthenticated()">
+                                    <a class="btn btn-outline-primary" href="/login">Login</a>
+                                </li>
                                 <li>
                                     <div class="header-icons">
-                                        <a class="shopping-cart" href="/cart"><img style="width:20px; height:20px;margin-right:10px;" th:src="@{/user/images/cart.png}"></a>
-                                        <a class="mobile-hide search-bar-icon" href="#"><i
-                                                class="fas fa-search"></i></a>
+                                        <a class="shopping-cart" href="/cart"><img
+                                                style="width:20px; height:20px;margin-right:10px;"
+                                                th:src="@{/user/images/cart.png}"></a>
+                                        <a class="mobile-hide search-bar-icon" href="#">
+                                            <i class="fas fa-search"></i></a>
+
                                     </div>
                                 </li>
                             </ul>
                         </nav>
-                        <a class="mobile-show search-bar-icon" href="#"><i class="fas fa-search"></i></a>
+                        <a class="mobile-show search-bar-icon" href="/search"><i class="fas fa-search"></i></a>
+
                         <div class="mobile-menu"></div>
                         <!-- menu end -->
                     </div>
@@ -92,12 +106,12 @@
             <div class="row">
                 <div class="col-lg-12">
                     <span class="close-btn"><i class="fas fa-window-close"></i></span>
-                    <div class="search-bar">
-                        <div class="search-bar-tablecell">
-                            <h3>Search For:</h3>
-                            <input type="text" placeholder="Keywords">
-                            <button type="submit">Search <i class="fas fa-search"></i></button>
-                        </div>
+                    <div class="search-bar-tablecell">
+                        <h3>Search For:</h3>
+                        <form th:action="@{/search}" method="post">
+                            <input type="text" name="keyword" placeholder="Nhập tên sản phẩm">
+                            <button type="submit">Tìm kiếm</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -183,6 +197,7 @@
         </div>
     </div>
     <!-- end copyright -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- jquery -->
     <script th:src="@{/user/js/jquery-1.11.3.min.js}"></script>

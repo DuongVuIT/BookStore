@@ -3,7 +3,6 @@ package com.example.BookStore.Controller.user;
 
 import com.example.BookStore.entity.Category;
 import com.example.BookStore.entity.Product;
-import com.example.BookStore.repository.CategoryRepository;
 import com.example.BookStore.services.CategoryServices;
 import com.example.BookStore.services.ProductServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,22 +26,24 @@ public class HomeController {
         List<Category> categories = categoryServices.getAllCate();
         model.addAttribute("products", productList);
         model.addAttribute("categories", categories);
-        return "home/index";
+        return "user/home/index";
     }
     @GetMapping("/contact")
     public String contact(){
-        return "home/contact";
+        return "user/home/contact";
     }
     @GetMapping("/cart")
     public String cart(){
-        return "home/cart";
+        return "user/cart/cart";
     }
     @GetMapping("/cart/checkout")
     public String checkout(){
-        return "home/cart/checkout";
+        return "user/cart/checkout";
     }
     @GetMapping("/product/detail")
     public String detail(){
-        return "home/product/detail";
+        return "user/product/detail";
     }
+
+
 }
