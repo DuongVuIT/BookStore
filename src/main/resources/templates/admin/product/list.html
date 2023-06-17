@@ -16,7 +16,7 @@
             <li><a href="/admin/product"><i class="icon-barcode"></i><span class="badge">  PRODUCT  </span></a></li>
             <li><a href="/admin/author"><i class="icon-group"></i><span class="badge">  AUTHOR  </span></a></li>
             <li><a href="#"><i class="icon-shopping-cart"></i><span class="badge">  ORDER  </span></a></li>
-            <li><a href="#"><i class="icon-group"></i><span class="badge">  USER  </span></a></li>
+            <li><a href="/admin/user"><i class="icon-group"></i><span class="badge">  USER  </span></a></li>
         </ul>
     </div>
 </div>
@@ -63,12 +63,25 @@
                         <a th:href="@{/admin/product/edit/{id}(id=${product.masp})}">Edit</a>
                         <a th:href="@{/admin/product/delete/{id}(id=${product.masp})}" onclick="return confirm('Are you sure?')">Delete</a>
                     </td>
+
                 </tr>
 
             </table>
+
         </th:block>
-        <!-- End of Content Block -->
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center pagination-sm"
+                th:each="i : ${#numbers.sequence(0, totalPages)}">
+                <li class="page-item" th:classappend="${currentPage == i}?'active'">
+                    <a class="page-link" th:href="@{/admin/product/(pageNo=${i})}"
+                       th:text="${i}"></a>
+                </li>
+            </ul>
+        </nav>
     </div>
+
+        <!-- End of Content Block -->
+
 </div>
 <!-- end: Content -->
 
