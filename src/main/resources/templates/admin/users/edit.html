@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <th:block th:replace="_layoutAdmin :: link-css"></th:block>
+    <style>
+    #content {
+      min-height: 100vh; /* Minimum height of the viewport */
+      background-color: whitesmoke;
+    }
+  </style>
+    <title>Create New Product</title>
+</head>
+<body>
+<th:block th:replace="_layoutAdmin :: header"></th:block>
+<!-- Main Menu -->
+<div id="sidebar-left" class="span2">
+    <div class="nav-collapse sidebar-nav">
+        <ul class="nav nav-tabs nav-stacked main-menu">
+            <li><a href="/admin/categories"><i class="icon-bar-chart"></i><span class="badge">  CATEGORY  </span></a></li>
+            <li><a href="/admin/product"><i class="icon-barcode"></i><span class="badge">  PRODUCT  </span></a></li>
+            <li><a href="#"><i class="icon-shopping-cart"></i><span class="badge">  ORDER  </span></a></li>
+            <li><a href="/admin/user"><i class="icon-group"></i><span class="badge">  USER  </span></a></li>
+        </ul>
+    </div>
+</div>
+<!-- end: Main Menu -->
+<!--  Content -->
+<div id="content" class="span10">
+    <div style="background-color: whitesmoke">
+        <!-- Content Block -->
+        <th:block th:fragment="content" th:inline="text">
+            <h1>Edit User</h1>
+            <br/>
+            <form th:action="@{/templates/admin/users/save}" th:object="${user}" method="post">
+                <!-- Các trường thông tin -->
+                <input type="hidden" th:field="*{makh}">
+                <div>
+                    <label for="fullname"> Name:</label>
+                    <input type="text" id="fullname" th:field="*{fullname}" required />
+                </div>
+                <div>
+                    <label for="username"> Username:</label>
+                    <input type="text" id="username" th:field="*{username}" required />
+                </div>
+                <div>
+                    <label for="password"> Password:</label>
+                    <input type="text" id="password" th:field="*{password}" required />
+                </div>
+                <div>
+                    <label for="sdt"> sdt:</label>
+                    <input type="text" id="sdt" th:field="*{sdt}" required />
+                </div>
+                <div>
+                    <label for="email"> email:</label>
+                    <input type="text" id="email" th:field="*{email}" required />
+                </div>
+                <div>
+                    <label for="diachi"> diachi:</label>
+                    <input type="text" id="diachi" th:field="*{diachi}" required />
+                </div>
+                <!-- Nút lưu và hủy -->
+                <input type="submit" class="btn btn-primary" value = "Save">
+                <a href="/admin/author" class="cancel-link">Cancel</a>
+            </form>
+        </th:block>
+        <!-- End of Content Block -->
+    </div>
+</div>
+<!-- end: Content -->
+<th:block th:replace="_layoutAdmin :: footer"></th:block>
+</body>
+</html>

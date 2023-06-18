@@ -15,8 +15,20 @@ public class ProductServices {
     @Autowired
     private IProductRepository productRepository;
 
-    public List<Product> getAllBooks() {
-        return productRepository.findAll();
+    public List<Product> getAllProduct(Integer pageNo,Integer pageSize){
+        if (pageNo == null) {
+            pageNo = 0; // Giá trị mặc định cho pageNo
+        } else {
+            // Xử lý khi pageNo không null
+        }
+
+        if (pageSize == null) {
+            pageSize = 6; // Giá trị mặc định cho pageSize
+        } else {
+            // Xử lý khi pageSize không null
+        }
+
+        return productRepository.findAllProducts(pageNo,pageSize);
     }
 
     public Product get(Integer id) {

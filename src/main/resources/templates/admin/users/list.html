@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My book list</title>
+    <th:block th:replace="_layoutAdmin :: link-css"></th:block>
+    <style>
+
+        #content {
+            min-height: 100vh; /* Minimum height of the viewport */
+            background-color: whitesmoke;
+        }
+    </style>
+</head>
+<body>
+<th:block th:replace="_layoutAdmin :: header"></th:block>
+
+<!-- Main Menu -->
+<div id="sidebar-left" class="span2">
+    <div class="nav-collapse sidebar-nav">
+        <ul class="nav nav-tabs nav-stacked main-menu">
+            <li><a href="/admin/categories"><i class="icon-bar-chart"></i><span class="badge">  CATEGORY  </span></a></li>
+            <li><a href="/admin/product"><i class="icon-barcode"></i><span class="badge">  PRODUCT  </span></a></li>
+            <li><a href="/admin/author"><i class="icon-group"></i><span class="badge">  AUTHOR  </span></a></li>
+            <li><a href="#"><i class="icon-shopping-cart"></i><span class="badge">  ORDER  </span></a></li>
+            <li><a href="/admin/users"><i class="icon-group"></i><span class="badge">  USER  </span></a></li>
+        </ul>
+    </div>
+</div>
+<!-- end: Main Menu -->
+
+
+<!-- start: Content -->
+<div id="content" class="span10">
+    <div style="background-color: whitesmoke">
+        <!-- Content Block -->
+        <th:block th:fragment="content" th:inline="text">
+            <div>
+                <a href="/admin/user/add" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Create New User</a>
+            </div>
+            <table class="table">
+                <tr>
+                    <th>Mã Khách hàng</th>
+                    <th>Tên Khách Hàng</th>
+                    <th>Địa chỉ</th>
+                    <th>Email</th>
+                    <th>Số điện thoại</th>
+                    <th>Tên đăng nhập</th>
+                    <th>Actions</th>
+                </tr>
+
+                <tr th:each="user : ${users}">
+                    <td class="p-2 border" th:text="${user.makh}"></td>
+                    <td class="p-2 border" th:text="${user.fullname}"></td>
+                    <td class="p-2 border" th:text="${user.diachi}"></td>
+                    <td class="p-2 border" th:text="${user.email}"></td>
+                    <td class="p-2 border" th:text="${user.sdt}"></td>
+                    <td class="p-2 border" th:text="${user.username}"></td>
+                    <td>
+                        <a th:href="@{/admin/users/edit/{id}(id=${user.makh})}">Edit</a>
+                        <a th:href="@{/admin/users/delete/{id}(id=${user.makh})}" onclick="return confirm('Are you sure?')">Delete</a>
+                    </td>
+
+                </tr>
+
+            </table>
+
+        </th:block>
+    </div>
+
+</div>
+<!-- end: Content -->
+
+<th:block th:replace="_layoutAdmin :: footer"></th:block>
+</body>
+</html>

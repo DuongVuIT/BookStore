@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <th:block th:replace="layout :: link-favicon"></th:block>
+
     <th:block th:replace="layout :: link-css"></th:block>
     <style>
         .product-grid {
@@ -10,7 +10,16 @@
             grid-template-columns: repeat(3, 1fr);
             grid-gap: 20px;
         }
-
+        #cart-mix{
+            font-family: 'Poppins', sans-serif;
+            display: inline-block;
+            background-color: #F28123;
+            color: #fff;
+            padding: 10px 20px;
+            transition: 0.3s;
+            border-radius: 50px;
+            border: none;
+        }
 
     </style>
 </head>
@@ -22,7 +31,7 @@
         <div class="row">
             <div class="col-lg-8 offset-lg-2 text-center">
                 <div class="breadcrumb-text">
-                    <!--                    <p>Fresh and Organic</p>-->
+
                     <h1>Book Shop</h1>
                 </div>
             </div>
@@ -35,7 +44,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div class="product-filters">
+                <div class="product-filters" id="productList" >
                     <ul>
                         <li class="active" data-filter="*">All</li>
                         <li th:each="category : ${categories}">
@@ -51,14 +60,24 @@
                 <div id="" class="col-lg-12 col-md-6 text-center strawberry">
                     <div class="single-product-item">
                         <div class="product-image">
-                            <a href="user/product/detail"><img th:src="@{/admin/image} + ${product.hinhanh}" alt="Product Image"></a>
+                            <a th:href="@{/product/detail/{id}(id=${product.masp})}"><img th:src="@{/admin/image/} + ${product.hinhanh}" alt="Product Image"></a>
                         </div>
                         <h3 th:text="${product.tensp}"></h3>
                         <p class="product-price">
                             <span style="font-size: 25px;" th:text="${#numbers.formatDecimal(product.gia, 0, 'COMMA', 0, 'POINT')}"></span>
                             <span style="font-size: 18px;">đ</span>
                         </p>
-                        <a href="../cart/cart.html" class="cart-btn"><img style="width:20px; height:20px;margin-right:10px;" th:src="@{/user/images/cart.png}"> Add to Cart</a>
+                        <form th:action="@{/cart/{id}(id=${product.masp})}" method="post">
+                            <button class="cart-btn" id="cart-mix" type="submit">
+                                <img style="width:20px; height:20px;margin-right:10px;" th:src="@{/user/images/cart.png}">
+                                Add to Cart
+                            </button>
+                        </form>
+<!--                        <a th:href="@{/cart/add/{id}(id=${product.masp})}" class="cart-btn" >-->
+<!--                            <img style="width:20px; height:20px;margin-right:10px;" th:src="@{/user/images/cart.png}">-->
+<!--                            Add to Cart-->
+<!--                        </a>-->
+
                     </div>
                 </div>
             </div>
@@ -67,13 +86,16 @@
         <div class="row">
             <div class="col-lg-12 text-center">
                 <div class="pagination-wrap">
-                    <ul>
-                        <li><a href="#">Prev</a></li>
-                        <li><a href="#">1</a></li>
-                        <li><a class="active" href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">Next</a></li>
-                    </ul>
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-center pagination-sm"
+                            th:each="i : ${#numbers.sequence(0, totalPages)}">
+                            <li class="page-item" th:classappend="${currentPage == i} ?
+'active'">
+                                <a class="page-link" th:href="@{/(pageNo=${i})}"
+                                   th:text="${i}"></a>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </div>

@@ -2,8 +2,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <th:block th:replace="layout :: link-favicon"></th:block>
+<!--    <th:block th:replace="layout :: link-favicon"></th:block>-->
     <th:block th:replace="layout :: link-css"></th:block>
+
 </head>
 <body>
 <th:block th:replace="layout :: header"></th:block>
@@ -13,7 +14,7 @@
         <div class="row">
             <div class="col-lg-8 offset-lg-2 text-center">
                 <div class="breadcrumb-text">
-<!--                    <p>Fresh and Organic</p>-->
+                    <!--                    <p>Fresh and Organic</p>-->
                     <h1>Cart</h1>
                 </div>
             </div>
@@ -28,7 +29,7 @@
         <div class="row">
             <div class="col-lg-8 col-md-12">
                 <div class="cart-table-wrap">
-                    <table class="cart-table">
+                    <table th:if="${check}" class="cart-table">
                         <thead class="cart-table-head">
                         <tr class="table-head-row">
                             <th class="product-remove"></th>
@@ -40,32 +41,30 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="table-body-row">
-                            <td class="product-remove"><a href="#"><i class="far fa-window-close"></i></a></td>
-                            <td class="product-image"><img th:src="@{/user/images/products/product-img-1.jpg}" alt=""></td>
-                            <td class="product-name">Strawberry</td>
-                            <td class="product-price">$85</td>
-                            <td class="product-quantity"><input type="number" placeholder="0"></td>
-                            <td class="product-total">1</td>
-                        </tr>
-                        <tr class="table-body-row">
-                            <td class="product-remove"><a href="#"><i class="far fa-window-close"></i></a></td>
-                            <td class="product-image"><img th:src="@{/user/images/products/product-img-2.jpg}" alt=""></td>
-                            <td class="product-name">Berry</td>
-                            <td class="product-price">$70</td>
-                            <td class="product-quantity"><input type="number" placeholder="0"></td>
-                            <td class="product-total">1</td>
-                        </tr>
-                        <tr class="table-body-row">
-                            <td class="product-remove"><a href="#"><i class="far fa-window-close"></i></a></td>
-                            <td class="product-image"><img th:src="@{/user/images/products/product-img-3.jpg}" alt=""></td>
-                            <td class="product-name">Lemon</td>
-                            <td class="product-price">$35</td>
-                            <td class="product-quantity"><input type="number" placeholder="0"></td>
-                            <td class="product-total">1</td>
+                        <tr class="table-body-row" th:each="item : ${products}">
+                            <td class="product-remove">
+                                <a href="#" th:href="@{/cart/remove/{productId}(productId=${item.product.masp})}" onclick="removeProduct(event, ${item.product.masp})">
+                                    <img
+                                            style="width:20px; height:20px;margin-right:10px;"
+                                            th:src="@{/user/images/close.png}">
+                                </a>
+                            </td>
+
+                            <td class="product-image"><img  th:src="@{/admin/image/{image}(image=${item.product.hinhanh})}" height="100" alt="Product Image"></td>
+                            <td class="product-name" th:text="${item.product.tensp}"></td>
+                            <td class="product-price"  th:text="${item.product.gia}"></td>
+<!--                            <td sec:authorize="hasAnyAuthority('USER')">-->
+<!--                                <input type="number" min="1" max="999" th:value="${item.quantity}" th:attr="data-item-id=${item.product.id}"  onchange="updateQuantity(this)">-->
+<!--                            </td>-->
+                            <td class="product-quantity"><input th:attr="data-item-id=${item.product.masp}"  onchange="updateQuantity(this)" th:value="${item.quantity}"  type="number" min="1" max="999"></td>
+                            <td class="product-total"  th:text="${item.product.gia * item.quantity}"></td>
                         </tr>
                         </tbody>
                     </table>
+                    <table th:if="${!check}">
+                        <h2>Empty</h2>
+                    </table>
+
                 </div>
             </div>
 
@@ -81,33 +80,19 @@
                         <tbody>
                         <tr class="total-data">
                             <td><strong>Subtotal: </strong></td>
-                            <td>$500</td>
+                            <td id="subtotal" th:text="${totalPrice}">0</td>
                         </tr>
-                        <tr class="total-data">
-                            <td><strong>Shipping: </strong></td>
-                            <td>$45</td>
-                        </tr>
-                        <tr class="total-data">
-                            <td><strong>Total: </strong></td>
-                            <td>$545</td>
-                        </tr>
+
                         </tbody>
                     </table>
+
                     <div class="cart-buttons">
-                        <a href="cart.html" class="boxed-btn">Update Cart</a>
+                        <a href="cart.html" class="boxed-btn " id="update-cart-btn">Update Cart</a>
                         <a href="/cart/checkout" class="boxed-btn black">Check Out</a>
                     </div>
                 </div>
 
-                <div class="coupon-section">
-                    <h3>Apply Coupon</h3>
-                    <div class="coupon-form-wrap">
-                        <form action="../home/index.html">
-                            <p><input type="text" placeholder="Coupon"></p>
-                            <p><input type="submit" value="Apply"></p>
-                        </form>
-                    </div>
-                </div>
+
             </div>
         </div>
     </div>
@@ -138,8 +123,20 @@
             </div>
         </div>
     </div>
+
 </div>
 <!-- end logo carousel -->
 <th:block th:replace="layout :: footer"></th:block>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script th:src="@{/user/js/updatequantity.js}"></script>
+<script th:src="@{/user/js/removecart.js}"></script>
+
+<script>
+        // Sự kiện click cho nút "Update Cart"
+        $('.update-cart-btn').click(function (event) {
+            event.preventDefault();
+            location.reload();
+        });
+    </script>
 </body>
 </html>

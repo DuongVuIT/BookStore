@@ -32,9 +32,13 @@ public class ProductController {
     private AuthorService authorService;
 
     @GetMapping
-    public String showAllBooks(Model model){
-        List<Product> productList = productServices.getAllBooks();
-        model.addAttribute("products", productList);
+    public String showAllProduct(Model model, @RequestParam(defaultValue = "0") Integer pageNo,
+                                 @RequestParam(defaultValue = "20") Integer pageSize){
+        model.addAttribute("products", productServices.getAllProduct(pageNo,pageSize));
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages",productServices.getAllProduct(pageNo, pageSize).size() / pageSize );
+        model.addAttribute("categories",categoryServices.getAllCate());
+
         return "admin/product/list";
     }
     @GetMapping("/add")

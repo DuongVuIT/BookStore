@@ -511,6 +511,7 @@ a.boxed-btn, a.bordered-btn, a.cart-btn {
   height: 100%;
   content: "";
   background-color: #07212e;
+  background-image: url("https://www.bing.com/images/search?view=detailV2&ccid=mkmmfhGS&id=2CD811A4794B326362211097CBE235DC754F187A&thid=OIP.mkmmfhGSO2EfXt_pJ7T1gAHaFl&mediaurl=https%3a%2f%2fmedia.timeout.com%2fimages%2f103637416%2fimage.jpg&cdnurl=https%3a%2f%2fth.bing.com%2fth%2fid%2fR.9a49a67e11923b611f5edfe927b4f580%3frik%3dehhPddw14suXEA%26pid%3dImgRaw%26r%3d0&exph=1546&expw=2048&q=book+shop&simid=608037047410951737&FORM=IRPRST&ck=93E7C229A6242153C01ABB3910DD22C9&selectedIndex=0&ajaxhist=0&ajaxserp=0");
   z-index: -1;
   opacity: 0.8;
 }

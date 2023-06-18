@@ -7,80 +7,94 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
 	crossorigin="anonymous">
+	<title>Login</title>
+	<th:block th:replace="layout::link-css"></th:block>
+	<style>
+		.gradient-custom-3 {
+			/* fallback for old browsers */
+			background: #84fab0;
+
+			/* Chrome 10-25, Safari 5.1-6 */
+			background: -webkit-linear-gradient(to right, rgba(132, 250, 176, 0.5), rgba(143, 211, 244, 0.5));
+
+			/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+			background: linear-gradient(to right, rgba(132, 250, 176, 0.5), rgba(143, 211, 244, 0.5))
+		}
+		.gradient-custom-4 {
+			/* fallback for old browsers */
+			background: #84fab0;
+
+			/* Chrome 10-25, Safari 5.1-6 */
+			background: -webkit-linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244, 1));
+
+			/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+			background: linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244, 1))
+		}
+	</style>
 </head>
 <body>
 
-	<!-- create navigation bar ( header) -->
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed"
-					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-					aria-controls="navbar">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="#" th:href="@{/static}">Registration</a>
-			</div>
-		</div>
-	</nav>
 
 <br>
 <br>
-	<!-- Create HTML registration form -->
-	<div class="container">
-		<div class="row">
-			<div class="col-md-6 col-md-offset-3">
+<div class="container">
+	<section class="vh-100 bg-image"
+			 style="background-image: url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp');">
+		<div class="mask d-flex align-items-center h-100 gradient-custom-3">
+			<div class="container h-100">
+				<div class="row d-flex justify-content-center align-items-center h-100">
+					<div class="col-12 col-md-9 col-lg-7 col-xl-6">
+						<div class="card" style="border-radius: 15px;">
+							<div class="card-body p-5">
+								<h2 class="text-uppercase text-center mb-5">Create an account</h2>
 
-				<!-- success message -->
-				<div th:if="${param.success}">
-					<div class="alert alert-info">You've successfully registered
-						to our awesome app!</div>
+								<form th:action="@{/register}" method="post" th:object="${user}">
+									<div class="form-outline mb-4">
+										<label class="control-label" for="hoten"> Ho ten </label> <input
+											id="hoten" class="form-control" th:field="*{fullname}" required
+											autofocus="autofocus" />
+									</div>
+
+									<div class="form-outline mb-4">
+										<label class="control-label" for="emaill"> Email </label> <input
+											id="emaill" class="form-control" th:field="*{email}"
+											required autofocus="autofocus" />
+									</div>
+									<div class="form-outline mb-4">
+										<label class="control-label" for="sdt"> SDT </label> <input
+											id="sdt" class="form-control" th:field="*{sdt}" required
+											autofocus="autofocus" />
+									</div>
+
+									<div class="form-outline mb-4">
+										<label class="control-label" for="tendangnhap"> Username </label> <input
+											id="tendangnhap" class="form-control" th:field="*{username}" required
+											autofocus="autofocus" />
+									</div>
+
+									<div class="form-outline mb-4">
+										<label class="control-label" for="matkhau"> Password </label> <input
+											id="matkhau" class="form-control" type="text"
+											th:field="*{password}" required autofocus="autofocus" />
+									</div>
+
+									<div class="d-flex justify-content-center">
+										<button type="submit"
+												class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Register</button>
+									</div>
+
+									<p class="text-center text-muted mt-5 mb-0">Have already an account? <a th:href="@{/login}"
+																											class="fw-bold text-body"><u>Login here</u></a></p>
+
+								</form>
+
+							</div>
+						</div>
+					</div>
 				</div>
-
-				<h1>Register</h1>
-
-				<form th:action="@{/register}" method="post" th:object="${user}">
-					<div class="form-group">
-						<label class="control-label" for="diachi"> Dia chi </label>
-						<input id="diachi" class="form-control" th:field="*{diachi}"
-							required autofocus="autofocus" />
-					</div>
-					<div class="form-group">
-						<label class="control-label" for="emaill"> Email </label> <input
-							id="emaill" class="form-control" th:field="*{email}"
-							required autofocus="autofocus" />
-					</div>
-					<div class="form-group">
-						<label class="control-label" for="hoten"> Ho ten </label> <input
-							id="hoten" class="form-control" th:field="*{fullname}" required
-							autofocus="autofocus" />
-					</div>
-					<div class="form-group">
-						<label class="control-label" for="tendangnhap"> Username </label> <input
-							id="tendangnhap" class="form-control" th:field="*{username}" required
-							autofocus="autofocus" />
-					</div>
-					<div class="form-group">
-						<label class="control-label" for="matkhau"> Password </label> <input
-							id="matkhau" class="form-control" type="text"
-							th:field="*{password}" required autofocus="autofocus" />
-					</div>
-					<div class="form-group">
-						<label class="control-label" for="sdt"> SDT </label> <input
-							id="sdt" class="form-control" th:field="*{sdt}" required
-							autofocus="autofocus" />
-					</div>
-
-					<div class="form-group">
-						<button type="submit" class="btn btn-success">Register</button>
-						<span>Already registered? <a href="/static" th:href="@{/login}">Login
-								here</a></span>
-					</div>
-				</form>
 			</div>
 		</div>
-	</div>
+	</section>
+</div>
 </body>
 </html>

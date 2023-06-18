@@ -30,5 +30,15 @@ public class SearchController {
         model.addAttribute("products", products);
         return "user/product/search_result";
     }
+    @GetMapping("/product/detail/{id}")
+    public String detail(@PathVariable("id") Integer id, Model model){
+        // Lấy thông tin sản phẩm từ cơ sở dữ liệu dựa trên productId
+        Product product = productService.get(id);
+
+        // Đặt dữ liệu sản phẩm vào model
+        model.addAttribute("product", product);
+
+        return "user/product/detail";
+    }
 
 }
