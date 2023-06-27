@@ -49,7 +49,11 @@ public class CartController {
         if (cart == null) {
             model.addAttribute("check", false);
             model.addAttribute("products", new ArrayList<Product>());
+<<<<<<< HEAD
             return "user/cart/index";
+=======
+            return "cart/index";
+>>>>>>> origin/master
         }
         model.addAttribute("check", true);
         model.addAttribute("products", cart);
